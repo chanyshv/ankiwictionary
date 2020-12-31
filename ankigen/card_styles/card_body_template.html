@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>{{word.word}}</h1>
+<ul>
+    {% for meaning in word.meanings %}
+    <li class="list-item">
+        {{ meaning.definition }}
+        {% for example in meaning.examples %}
+        <br>
+        <em>{{ example }}</em>
+        {% endfor %}
+    </li>
+    {% endfor %}
+</ul>
+</body>
+</html>
