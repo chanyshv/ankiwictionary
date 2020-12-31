@@ -39,17 +39,7 @@ class Wictionary:
         return Word(meanings, word)
 
     def _parse_definition(self, elm: etree._Element):
-        t = elm.text
-        if t:
-            yield t
-        for e in elm:
-            if e.tag == 'span' and e.attrib.get('class') == 'example-details':
-                continue
-            e: etree._Element
-            yield from e.itertext()
-            t = e.tail
-            if t:
-                yield t
+        return ''.join(elm.xpath('.//text()[not(./ancestor::span[@class="example-fullblock"])]'))
 
     def _parse_example(self, elm: etree._Element):
         t = elm.text
