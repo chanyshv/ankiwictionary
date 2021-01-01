@@ -50,7 +50,8 @@ class Wiktionary:
         return Word(meanings, word)
 
     def _parse_definition(self, elm: etree._Element):
-        return ''.join(elm.xpath('.//text()[not(./ancestor::span[@class="example-fullblock"])]'))
+        return ''.join(
+            elm.xpath('.//text()[not(./ancestor::*[contains(@class,"example-fullblock") or @class="reference"])]'))
 
     def _parse_example(self, elm: etree._Element):
         t = elm.text
