@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="ankiwiktionary",
-    version="0.0.1",
+    version="0.0.1b",
     packages=find_namespace_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     package_data={
         'ankiwiktionary.card_styles': ['*.html'],
