@@ -18,15 +18,15 @@ class Word:
     word: str
 
 
-class WictionaryError(Exception):
+class WiktionaryError(Exception):
     pass
 
 
-class NotFoundError(WictionaryError):
+class NotFoundError(WiktionaryError):
     pass
 
 
-class Wictionary:
+class Wiktionary:
     _WORD_URL = 'https://ru.wiktionary.org/wiki/'
     _API_URL = 'https://ru.wiktionary.org/w/api.php'
 

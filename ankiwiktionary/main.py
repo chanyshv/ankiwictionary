@@ -1,9 +1,9 @@
 from jinja2 import Environment, PackageLoader, select_autoescape
 
-from ankiwictionary.parser import Word
+from ankiwiktionary.parser import Word
 
 env = Environment(
-    loader=PackageLoader('ankiwictionary', 'card_styles'),
+    loader=PackageLoader('ankiwiktionary', 'card_styles'),
     autoescape=select_autoescape(['html', 'xml'])
 )
 

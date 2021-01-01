@@ -6,7 +6,7 @@ import colorama
 import requests as rq
 
 from .main import generate_card_from_word
-from .parser import Wictionary, NotFoundError
+from .parser import Wiktionary, NotFoundError
 
 
 def _generate_error_message(error_text: str) -> str:
@@ -15,15 +15,15 @@ def _generate_error_message(error_text: str) -> str:
 
 @click.group()
 @click.pass_context
-def ankiwictionary(ctx: click.Context):
+def ankiwiktionary(ctx: click.Context):
     colorama.init()
-    client = Wictionary()
+    client = Wiktionary()
     ctx.obj['client'] = client
 
 
-@ankiwictionary.command('gen-cards', help='Generate flashcards from passed WORDS')
+@ankiwiktionary.command('gen-cards', help='Generate flashcards from passed WORDS')
 @click.argument('words', nargs=-1)
-@click.option('--result_path', '-r', type=click.Path(writable=True), default='./wictionary-result.csv',
+@click.option('--result_path', '-r', type=click.Path(writable=True), default='./wiktionary-result.csv',
               help='Path to the file to write the result to')
 @click.pass_context
 def gen_cards(ctx: click.Context, words: ty.Sequence[str], result_path):
@@ -46,15 +46,15 @@ def gen_cards(ctx: click.Context, words: ty.Sequence[str], result_path):
             print(f'Word "{word_str}" processed {colorama.Fore.GREEN + "successfully" + colorama.Style.RESET_ALL}')
 
 
-@ankiwictionary.command('search', help='Search for the passed WORDS in wictionary')
+@ankiwiktionary.command('search', help='Search for the passed WORDS in wiktionary')
 @click.argument('words', nargs=-1)
 @click.pass_context
 def search(ctx: click.Context, words: ty.Sequence[str]):
-    client: Wictionary = ctx.obj['client']
+    client: Wiktionary = ctx.obj['client']
     for word in words:
         results = client.search(word)
         print(f'Results for "{word}": {", ".join(results)}')
 
 
 def main():
-    ankiwictionary(obj={})
+    ankiwiktionary(obj={})

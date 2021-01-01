@@ -1,4 +1,4 @@
-from ankiwictionary import ankiwictionary
+from ankiwiktionary import ankiwiktionary
 
 if __name__ == '__main__':
-    ankiwictionary(obj={})
+    ankiwiktionary(obj={})

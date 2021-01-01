@@ -1,5 +1,5 @@
 import pytest
-from ankiwictionary.parser import Wictionary
+from ankiwiktionary.parser import Wiktionary
 
 MOCKED_TESTS = True
 
@@ -9,7 +9,7 @@ MOCKED_TESTS = True
 
 @pytest.fixture()
 def client():
-    return Wictionary()
+    return Wiktionary()
 
 
 def _get_word_parameters():

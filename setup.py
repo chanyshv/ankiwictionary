@@ -4,11 +4,11 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name="ankiwictionary",
+    name="ankiwiktionary",
     version="0.0.1",
     packages=find_namespace_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     package_data={
-        'ankiwictionary.card_styles': ['*.html'],
+        'ankiwiktionary.card_styles': ['*.html'],
     },
     include_package_data=True,
     install_requires=[
@@ -20,17 +20,17 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'ankiwictionary=ankiwictionary.cli:main'
+            'ankiwiktionary=ankiwiktionary.cli:main'
         ]},
     author='Damir Chanyshev',
     author_email='hairygeek@yandex.com',
-    description='Anki cards generating from Wictionary pages',
+    description='Anki cards generating from Wiktionary pages',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    keywords='anki card generation wictionary russian',
+    keywords='anki card generation wiktionary russian',
     project_urls={
-        "Bug Tracker": "https://github.com/hairygeek/ankiwictionary",
-        "Documentation": "https://github.com/hairygeek/ankiwictionary",
-        "Source Code": "https://github.com/hairygeek/ankiwictionary",
+        "Bug Tracker": "https://github.com/hairygeek/ankiwiktionary",
+        "Documentation": "https://github.com/hairygeek/ankiwiktionary",
+        "Source Code": "https://github.com/hairygeek/ankiwiktionary",
     }
 )

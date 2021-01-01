@@ -1,16 +1,16 @@
-CLI for generating Anki flashcards from wictionary.org pages. **Works only with russian words**.
+CLI for generating Anki flashcards from wiktionary.org pages. **Works only with russian words**.
 
-# ankiwictionary
+# ankiwiktionary
 
 ```
-Usage: ankiwictionary [OPTIONS] COMMAND [ARGS]...
+Usage: ankiwiktionary [OPTIONS] COMMAND [ARGS]...
 
 Options:
   --help  Show this message and exit.
 
 Commands:
   gen-cards  Generate flashcards from passed WORDS
-  search     Search for the passed WORDS in wictionary
+  search     Search for the passed WORDS in wiktionary
 ```
 
 ## Features
@@ -21,16 +21,16 @@ Commands:
 ## Usage
 
 ```commandline
-➜  tmp ankiwictionary gen-cards самоопределяться луддит дихотомия привинтивный дискурс конструктивный
+➜  tmp ankiwiktionary gen-cards самоопределяться луддит дихотомия привинтивный дискурс конструктивный
 Word "самоопределяться" processed successfully
 Word "луддит" processed successfully
 Word "дихотомия" processed successfully
 [Error] Word "привинтивный" not found
 Word "дискурс" processed successfully
 Word "конструктивный" processed successfully
-➜  tmp ankiwictionary search привинтивный
+➜  tmp ankiwiktionary search привинтивный
 Results for "привинтивный":
-➜  tmp ankiwictionary search люмпед
+➜  tmp ankiwiktionary search люмпед
 Results for "люмпед": люмпен, люмпен-пролетариат, люмпенизация, люмпен-пролетарий, люмпен-интеллигенция, люмпенский, люмпенизироваться, люмпенизировать, люмпенствовать, люмпен-интеллигент
 ```
 
