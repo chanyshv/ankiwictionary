@@ -1,8 +1,12 @@
 language: python
 python:
-  - "3.8"
-install:
-  pipenv install --dev
-script:
-  pipenv run python -m pytest
-
+- '3.8'
+install: pipenv install --dev
+script: pipenv run python -m pytest
+deploy:
+  provider: pypi
+  username: __token__
+  password:
+    secure: iaPZ3SLhDlICGnwlTe9qfgvwGQRFfwVRFyCAi7YGB8DXtIpV5ohkn5w4sL26NZP4yV85wEUBvcBFDE3K8ibX0Ocuz8TJ28ezcfg96KSUGBG61148ZVVPiyz38YvnrDk2Q/9proveY8dL8ZAfrt+e2mxTabCHY+ioXAVj65epVD0G7Kk5wucBiGQFef/JgY6OQS2ImxIrneCNs4eWRrNDcHSA7WiSnco96jCMoNCcYok5nTXkv4X9+bQksvcayrOeQ+ByEB96oYRhTGPLwH3bK/LOhdrfojHfUbHExwD2Pab9dMhJ95cDNw5MVkxoyJ2ER0YxzXKEanFS1UkWF6j2l5dUlcr6dCrvzQeZc9O2vpIVVYDKrgMqPGlnOZ2OIVBOvOXdO1AHdAYBVL42PEd5O9xyGlozfqKY/zyoTRCtOCnKWu//YhYQbehQ38J87E6jTFaPwZgJAJXW8iAOjmg+OfvIJ6ISiu7QI4g76ib9aVlfj+2xfSMtYgS/sos+gh19L0U+ENCyUCTpjXY4hq9eE5LiB1RwWxevzMXjDpg056+V1GXy5/sJQTEhyDSiT8f6J/CuPITXvpKr6k9sn9FZ/IP7aSdNo+qTkOMFu3zTU2hVZ1rbTqYJkubpVFBfCM5hgK4YfKi0+SYHfllAqNnQS1uGmFbz2xe19YP9zKN1flg=
+  on:
+    tags: true
