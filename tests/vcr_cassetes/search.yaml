@@ -1,0 +1,86 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.25.1
+    method: GET
+    uri: https://ru.wiktionary.org/w/api.php?action=opensearch&format=json&formatversion=2&search=%D1%81%D0%B0%D0%BC%D1%8B%D0%B9&namespace=0&limit=10
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA4tWuth4YcOFPRe7L+xU0olG4SFxFC62X2y6sE/hwt4LO0DEBoULWy82Xmy62IOi
+        TBdVO1DHxSYFbGIXtl3YqoDdrr1AzoWFIM6FfRd2Xth9YR+GwIVNF3ZcbIdp2gg1AaIGyNmtFAv0
+        CVAEJwLJZ5SUFBRb6esXleqVZ2aXZObnJRZV6uUXpesDuZn6qi6GqhaGqi4Gqk4GYNIZLOIEZlsC
+        DaFIfzyYYw4mjcBCrvFgygVMWiBzDCAcU5iJEC1A0plSV+hSxZNQ90PY8TQxEsgxgwRCPE3jxYUY
+        /Qaqjmj6IW4F2Q8mIWa5UtMsMAkJFQtI0iHDp4akhhSm6+D6nZRiYwFyrQ4DPAQAAA==
+    headers:
+      Accept-Ranges:
+      - bytes
+      Age:
+      - '4'
+      Cache-Control:
+      - max-age=10800, s-maxage=10800, public
+      Connection:
+      - keep-alive
+      Content-Disposition:
+      - inline; filename=api-result.json
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '277'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 01 Jan 2021 09:11:29 GMT
+      Expires:
+      - Fri, 01 Jan 2021 12:11:29 GMT
+      NEL:
+      - '{ "report_to": "wm_nel", "max_age": 86400, "failure_fraction": 0.05, "success_fraction":
+        0.0}'
+      P3p:
+      - CP="See https://ru.wiktionary.org/wiki/Special:CentralAutoLogin/P3P for more
+        info."
+      Report-To:
+      - '{ "group": "wm_nel", "max_age": 86400, "endpoints": [{ "url": "https://intake-logging.wikimedia.org/v1/events?stream=w3c.reportingapi.network_error&schema_uri=/w3c/reportingapi/network_error/1.0.0"
+        }] }'
+      Server:
+      - mw1284.eqiad.wmnet
+      Server-Timing:
+      - cache;desc="hit-front"
+      Set-Cookie:
+      - WMF-Last-Access=01-Jan-2021;Path=/;HttpOnly;secure;Expires=Tue, 02 Feb 2021
+        00:00:00 GMT
+      - WMF-Last-Access-Global=01-Jan-2021;Path=/;Domain=.wiktionary.org;HttpOnly;secure;Expires=Tue,
+        02 Feb 2021 00:00:00 GMT
+      - GeoIP=RU:BA:Ufa:54.80:55.91:v4; Path=/; secure; Domain=.wiktionary.org
+      Strict-Transport-Security:
+      - max-age=106384710; includeSubDomains; preload
+      Vary:
+      - Accept-Encoding,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization
+      X-Cache:
+      - cp3058 miss, cp3050 hit/1
+      X-Cache-Status:
+      - hit-front
+      X-Client-IP:
+      - 178.214.245.105
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Opensearch-Type:
+      - comp_suggest
+      X-Request-Id:
+      - X@7nQQpAEDEAAFKd6q4AAACV
+      X-Search-Id:
+      - 6j177buciwzbafc4s5nr9ya3r
+    status:
+      code: 200
+      message: OK
+version: 1
