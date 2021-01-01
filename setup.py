@@ -1,7 +1,7 @@
 from setuptools import setup, find_namespace_packages
 
-# with open("README.md", "r") as fh:
-#     long_description = fh.read()
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 setup(
     name="ankiwictionary",
@@ -25,7 +25,7 @@ setup(
     author='Damir Chanyshev',
     author_email='hairygeek@yandex.com',
     description='Anki cards generating from Wictionary pages',
-    # long_description=long_description,
+    long_description=long_description,
     long_description_content_type="text/markdown",
     keywords='anki card generation wictionary russian',
     project_urls={

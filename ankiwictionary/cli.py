@@ -21,12 +21,13 @@ def ankiwictionary(ctx: click.Context):
     ctx.obj['client'] = client
 
 
-@ankiwictionary.command('gen-cards')
+@ankiwictionary.command('gen-cards', help='Generate flashcards from passed WORDS')
 @click.argument('words', nargs=-1)
-@click.option('--result_path', '-r', type=click.Path(writable=True))
+@click.option('--result_path', '-r', type=click.Path(writable=True), default='./wictionary-result.csv',
+              help='Path to the file to write the result to')
 @click.pass_context
 def gen_cards(ctx: click.Context, words: ty.Sequence[str], result_path):
-    with open(result_path or './wictionary-result.csv', 'w', newline='') as fp:
+    with open(result_path, 'w', newline='') as fp:
         writer = csv.writer(fp, delimiter='~', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for word_str in words:
             try:
@@ -45,7 +46,7 @@ def gen_cards(ctx: click.Context, words: ty.Sequence[str], result_path):
             print(f'Word "{word_str}" processed {colorama.Fore.GREEN + "successfully" + colorama.Style.RESET_ALL}')
 
 
-@ankiwictionary.command('search')
+@ankiwictionary.command('search', help='Search for the passed WORDS in wictionary')
 @click.argument('words', nargs=-1)
 @click.pass_context
 def search(ctx: click.Context, words: ty.Sequence[str]):
