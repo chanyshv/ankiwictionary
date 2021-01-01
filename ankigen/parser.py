@@ -18,8 +18,17 @@ class Word:
     word: str
 
 
+class WictionaryError(Exception):
+    pass
+
+
+class NotFoundError(WictionaryError):
+    pass
+
+
 class Wictionary:
     _WORD_URL = 'https://ru.wiktionary.org/wiki/'
+    _API_URL = 'https://ru.wiktionary.org/w/api.php'
 
     def __init__(self):
         self._session = rq.Session()
@@ -33,6 +42,8 @@ class Wictionary:
     def get_word(self, word: str):
         page = self._get_page(word)
         raw_meanings = page.xpath('//div[@id="mw-content-text"]/div[@class="mw-parser-output"]/ol[1]/li[not(@class)]')
+        if not raw_meanings:
+            raise NotFoundError
         meanings = []
         for m in raw_meanings:
             meanings.append(self._parse_meaning(m))
@@ -62,3 +73,15 @@ class Wictionary:
             example = ''.join(self._parse_example(e))
             parsed_examples.append(example)
         return Meaning(definition, parsed_examples)
+
+    def search(self, word: str):
+        params = {
+            'action': 'opensearch',
+            'format': 'json',
+            'formatversion': '2',
+            'search': word,
+            'namespace': '0',
+            'limit': '10',
+        }
+        response = self._session.get(self._API_URL, params=params)
+        return response.json()[1]

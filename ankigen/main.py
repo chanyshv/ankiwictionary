@@ -1,6 +1,6 @@
 from jinja2 import Environment, PackageLoader, select_autoescape
 
-from ankigen.parser import Wictionary
+from ankigen.parser import Word
 
 env = Environment(
     loader=PackageLoader('ankigen', 'card_styles'),
@@ -8,10 +8,10 @@ env = Environment(
 )
 
 
-def generate_card_from_word(word: str):
-    client = Wictionary()
-    w = client.get_word(word)
+def generate_card_from_word(word: Word):
+    for meaning in word.meanings:
+        if len(meaning.examples) > 3:
+            meaning.examples = meaning.examples[:3]
     template = env.get_template('card_body_template.html')
-    t = template.render(word=w)
-    open('res.html', 'w').write(t)
+    t = template.render(word=word)
     return t

@@ -11,6 +11,8 @@ wiktionaryparser = "*"
 lxml = "*"
 yarl = "*"
 jinja2 = "*"
+click = "*"
+colorama = "*"
 
 [requires]
 python_version = "3.8"

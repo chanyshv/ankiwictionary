@@ -5,11 +5,17 @@
 <ul>
     {% for meaning in word.meanings %}
     <li class="list-item">
+        {% raw %}
+        {{c1::
+        {% endraw %}
         {{ meaning.definition }}
         {% for example in meaning.examples %}
         <br>
         <em>{{ example }}</em>
         {% endfor %}
+        {% raw %}
+        }}
+        {% endraw %}
     </li>
     {% endfor %}
 </ul>

@@ -7,6 +7,6 @@ def client():
     return Wictionary()
 
 
-@pytest.fixture(params=['палка'])
+@pytest.fixture(params=['палка', 'привет', 'футболка'])
 def word(request):
     return request.param
