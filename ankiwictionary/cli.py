@@ -53,3 +53,7 @@ def search(ctx: click.Context, words: ty.Sequence[str]):
     for word in words:
         results = client.search(word)
         print(f'Results for "{word}": {", ".join(results)}')
+
+
+def main():
+    ankiwictionary(obj={})

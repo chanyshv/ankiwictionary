@@ -1,5 +1,5 @@
 import pytest
-from ankigen.parser import Wictionary
+from ankiwictionary.parser import Wictionary
 
 
 @pytest.fixture()
