@@ -18,19 +18,23 @@ Commands:
 * Generating cloze cards
 * Examples processing
 
+## Installation
+```commandline
+➜ pip install ankiwiktionary
+```
 ## Usage
 
 ```commandline
-➜  tmp ankiwiktionary gen-cards самоопределяться луддит дихотомия привинтивный дискурс конструктивный
+➜ ankiwiktionary gen-cards самоопределяться луддит дихотомия привинтивный дискурс конструктивный
 Word "самоопределяться" processed successfully
 Word "луддит" processed successfully
 Word "дихотомия" processed successfully
 [Error] Word "привинтивный" not found
 Word "дискурс" processed successfully
 Word "конструктивный" processed successfully
-➜  tmp ankiwiktionary search привинтивный
+➜ ankiwiktionary search привинтивный
 Results for "привинтивный":
-➜  tmp ankiwiktionary search люмпед
+➜ ankiwiktionary search люмпед
 Results for "люмпед": люмпен, люмпен-пролетариат, люмпенизация, люмпен-пролетарий, люмпен-интеллигенция, люмпенский, люмпенизироваться, люмпенизировать, люмпенствовать, люмпен-интеллигент
 ```
 
