@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h1>{{word.word}}</h1>
+<h1>
+    {% raw %}
+    {{c2::
+    {% endraw %}
+    {{word.word}}
+    {% raw %}
+    }}
+    {% endraw %}
+</h1>
 <ul>
     {% for meaning in word.meanings %}
     <li class="list-item">
