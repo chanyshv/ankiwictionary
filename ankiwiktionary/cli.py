@@ -6,7 +6,7 @@ import colorama
 import requests as rq
 
 from .main import generate_card_from_word
-from .parser import Wiktionary, NotFoundError
+from .parser import Wiktionary, NotFoundError, Word
 
 
 def _generate_error_message(error_text: str) -> str:
@@ -31,7 +31,7 @@ def gen_cards(ctx: click.Context, words: ty.Sequence[str], result_path):
         writer = csv.writer(fp, delimiter='~', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for word_str in words:
             try:
-                w = ctx.obj['client'].get_word(word_str)
+                w: Word = ctx.obj['client'].get_word(word_str.lower())
             except NotFoundError:
                 print(_generate_error_message(f'Word "{word_str}" not found'))
                 continue
@@ -42,6 +42,7 @@ def gen_cards(ctx: click.Context, words: ty.Sequence[str], result_path):
             except Exception:
                 print(_generate_error_message(f'Word "{word_str}" was not processed. Unknown error'))
                 continue
+            w.word = w.word.capitalize()
             writer.writerow((generate_card_from_word(w),))
             print(f'Word "{word_str}" processed {colorama.Fore.GREEN + "successfully" + colorama.Style.RESET_ALL}')
 
