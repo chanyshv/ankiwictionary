@@ -40,4 +40,4 @@ Results for "люмпед": люмпен, люмпен-пролетариат, �
 
 ## Important details
 
-* Generated file should be imported to Anki using "Import File" button. Set "Fields separated by" to `~` and activate the "Allow HTML in fields" checkbox.
+* Generated file should be imported to Anki using the "Import File" button. Set "Fields separated by" to `~` and activate the "Allow HTML in fields" checkbox.
