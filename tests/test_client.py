@@ -2,7 +2,7 @@ import typing as ty
 
 import vcr
 
-from ankiwiktionary.parser import Word, Meaning
+from ankiwiktionary.wiktionary_parser import Word, Meaning
 
 
 @vcr.use_cassette('tests/vcr_cassetes/word.yaml')
