@@ -88,6 +88,72 @@ def _process_wiktionary_word(word, client: Wiktionary):
     return w
 
 
+def _input_synonyms(word, synonyms: ty.Sequence[str]):
+    print(f'Processing word {Fore.MAGENTA + word + Style.RESET_ALL}')
+    if not synonyms:
+        print("No synonyms found")
+        return []
+    for i, synonym in enumerate(synonyms):
+        print(f'{i + 1}: {synonym}')
+    while 1:
+        print("Print numbers of synonyms to include in the card, separated by space (0 to skip)")
+        numbers = list(map(int, input().split()))
+        if (not numbers) or (not all(0 < n <= len(synonyms) for n in numbers)):
+            if numbers and numbers[0] == 0:
+                return []
+            print("Invalid input")
+            continue
+        return [synonyms[n - 1] for n in numbers]
+
+
+def _provide_own_example(skip=False):
+    print("Print your own example" + " (0 to skip)" if skip else "")
+    inp = input()
+    if skip and inp == '0':
+        return None
+    return inp
+
+
+def _print_meanings(parsed_syn: Word, term: Terminal):
+    k = 0
+    print(f"There are {len(parsed_syn.meanings)} meanings for this word")
+    for i, meaning in enumerate(parsed_syn.meanings):
+        print(f'{Fore.MAGENTA + str(i + 1) + Style.RESET_ALL}: {term.italic(meaning.definition)}')
+        for _, ex in enumerate(meaning.examples):
+            print(f'\t{Fore.CYAN + str(k + 1) + Style.RESET_ALL}: {ex}')
+            k += 1
+
+
+def _input_for_example(examples: ty.Sequence[str]):
+    while 1:
+        print("Which should be included in the card? (0 to provide your own, -1 to skip)")
+        inp = input()
+        if not inp.isdigit():
+            print("Invalid input")
+            continue
+        n = int(inp)
+        if n == -1:
+            break
+        if n == 0:
+            return _provide_own_example()
+        if not 0 < n <= len(examples):
+            print("Invalid input")
+            continue
+        return examples[n - 1]
+
+
+def _cloze_example(example, synonym, synonym_ind):
+    print("Which words should be clozed?")
+    print(_sentence_to_replaced(example, synonym))
+    words = example.split()
+    clozed_words_indexes = list(map(int, input().split()))
+    clozed_words = [words[i - 1].strip(".,?!") for i in clozed_words_indexes]
+    for ww in clozed_words:
+        example = example.replace(ww, f'{{{synonym_ind + 1}|{ww}}}')
+    example = example.replace(f'}} {{{synonym_ind + 1}|', ' ')
+    return example
+
+
 @ankiwiktionary.command('synonyms', help='Search for synonyms of the passed words in Wiktionary')
 @click.argument('words', nargs=-1)
 @click.option('--result_dir', '-r', type=click.Path(writable=True), default='.',
@@ -96,74 +162,23 @@ def _process_wiktionary_word(word, client: Wiktionary):
 def gen_synonym_cards(ctx: click.Context, words: ty.Sequence[str], result_dir: str):
     term: Terminal = ctx.obj['terminal']
     for word in words:
-        print(f'Processing word {Fore.MAGENTA + word + Style.RESET_ALL}')
-        synonyms = ctx.obj['synonyms_client'].get_synonyms(word)
-        if not synonyms:
-            print("No synonyms found")
-            continue
-        for i, synonym in enumerate(synonyms):
-            print(f'{i + 1}: {synonym}')
-        while 1:
-            print("Print numbers of synonyms to include in the card, separated by space")
-            numbers = list(map(int, input().split()))
-            if (not numbers) or (not all(0 < n <= len(synonyms) for n in numbers)):
-                print("Invalid input")
-                continue
-            print("Picked words are:")
-            for n in numbers:
-                print(f'{n}: {synonyms[n - 1]}')
-            if not click.confirm('Confirm?'):
-                continue
-            else:
-                break
+        taken_synonyms = _input_synonyms(word, ctx.obj['synonyms_client'].get_synonyms(word))
         other_synonyms = []
         if click.confirm("Add any other synonyms?"):
             other_synonyms = input().split()
-        taken_synonyms = [synonyms[n - 1] for n in numbers]
         taken_synonyms.extend(other_synonyms)
         processed_words = []
         for synonym_ind, synonym in enumerate(taken_synonyms):
             parsed_syn = _process_wiktionary_word(synonym, ctx.obj['client'])
-            if not parsed_syn:
-                continue
-            parsed_syn.word = parsed_syn.word.capitalize()
-
-            # processing meanings and examples
-            k = 0
-            print(f"There are {len(parsed_syn.meanings)} meanings for this word")
             examples = []
-            for i, meaning in enumerate(parsed_syn.meanings):
-                print(f'{Fore.MAGENTA + str(i + 1) + Style.RESET_ALL}: {term.italic(meaning.definition)}')
-                for _, ex in enumerate(meaning.examples):
-                    print(f'\t{Fore.CYAN + str(k + 1) + Style.RESET_ALL}: {ex}')
-                    examples.append(ex)
-                    k += 1
-            example = None
-            while 1:
-                print("Which should be included in the card? (0 to provide your own, -1 to skip)")
-                n = int(input())
-                if n == -1:
-                    break
-                if n == 0:
-                    example = input()
-                    break
-                if not 0 < n <= len(examples):
-                    print("Invalid input")
-                    continue
-                example = examples[n - 1]
-                break
-            if example is None:
-                continue
-
-            # processing cloze
-            print("Which words should be clozed?")
-            print(_sentence_to_replaced(example, parsed_syn.word))
-            words = example.split()
-            clozed_words_indexes = list(map(int, input().split()))
-            clozed_words = [words[i - 1].strip(".,?!") for i in clozed_words_indexes]
-            for ww in clozed_words:
-                example = example.replace(ww, f'{{{synonym_ind + 1}|{ww}}}')
-            processed_words.append(Synonym(parsed_syn.word, example))
+            if parsed_syn:
+                _print_meanings(parsed_syn, term)
+                examples = [ex for meaning in parsed_syn.meanings for ex in meaning.examples]
+                if examples:
+                    example = _input_for_example(examples)
+            if not examples or not parsed_syn:
+                example = _provide_own_example(skip=True)
+            processed_words.append(Synonym(synonym, _cloze_example(example.strip(), synonym, synonym_ind)))
         word = word.capitalize()
         card = generate_synonyms_card(word, processed_words)
         with open(Path(result_dir) / f'{word}.md', 'w') as f:
@@ -171,11 +186,12 @@ def gen_synonym_cards(ctx: click.Context, words: ty.Sequence[str], result_dir: s
 
 
 def _sentence_to_replaced(sentence: str, word: str):
-    w_l = len(word)
     spl = sentence.split()
     r = []
+    mnw = (min(len(w) for w in word.split()))
+    mxw = (max(len(w) for w in word.split()))
     for i, s in enumerate(spl):
-        if 0.7 <= w_l / len(s) <= 1.5:
+        if 0.7 <= len(s) / mnw and len(s) / mxw <= 1.5:
             r.append(f'{i + 1}: {Fore.MAGENTA + s + Style.RESET_ALL}')
         else:
             r.append(f'{s}')

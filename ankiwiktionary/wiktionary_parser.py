@@ -36,7 +36,8 @@ class Wiktionary:
     def _get_page(self, word) -> etree._Element:
         url = yarl.URL(self._WORD_URL) / word
         r = self._session.get(str(url))
-        parsed_page: etree._Element = html.fromstring(r.text)
+        parser = html.HTMLParser(encoding='iso-8859-1')
+        parsed_page: etree._Element = html.fromstring(r.text, parser=parser)
         return parsed_page
 
     def get_word(self, word: str):
